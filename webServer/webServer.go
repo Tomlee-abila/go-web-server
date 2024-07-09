@@ -6,15 +6,23 @@ import (
 	"time"
 )
 
+var indexPage = `<!DOCTYPE html>
+<html>
+	<body>
+		<h1>My First Heading </h1>
+		<p>My First paragraph. </p>
+	</body>
+</html>
+`
 
 func WebServer() {
 	address := ":8080"
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("my-header", "my-value")
-		w.WriteHeader(http.StatusAccepted)
-		w.Write([]byte("hello"))
+		w.Header().Add("content-type", "text/html")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(indexPage))
 	})
 
 	s := &http.Server{
