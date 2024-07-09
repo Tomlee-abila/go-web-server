@@ -6,9 +6,16 @@ import (
 	"time"
 )
 
+
 func WebServer() {
 	address := ":8080"
 	mux := http.NewServeMux()
+
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("my-header", "my-value")
+		w.WriteHeader(http.StatusAccepted)
+		w.Write([]byte("hello"))
+	})
 
 	s := &http.Server{
 		Addr:           address,
